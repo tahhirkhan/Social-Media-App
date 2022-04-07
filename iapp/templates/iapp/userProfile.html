@@ -1,0 +1,137 @@
+{% include 'iapp/nav.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+
+    <style>
+
+    	a {
+    		text-decoration: none;
+    	}
+
+    	.comm {
+    		float: right;
+    	}
+
+    	.profilePic {
+    		height: 30px;
+    		width: 30px;
+    		border: 3px solid darkblue;
+    	}
+
+    	.avt {
+            height: 200px;
+            width: 200px;
+            margin: 25px;
+            align-self: center;
+            border: 3px solid darkcyan;
+
+        }
+
+        .pass {
+            float: right;
+        }
+
+    </style>
+</head>
+<body class="container">
+	<br>
+	<br>
+	<br>
+
+
+	<!-- <div>
+		<li>First Name: {{ firstName }} </li>
+		<li>Last Name: {{ lastName }}</li>
+		<li>Username: {{ userName }}</li>
+		<li>Email: {{ email }} </li>
+	</div> -->
+
+
+	<div class="card mb-3 border-primary">
+        <div class="row g-0">
+            <div class="col-md-2">
+                {% if userX.avatar %}
+
+                <img class="avt rounded-circle" src="{{ userX.avatar.url }}" class="img-fluid rounded-circle" alt="Profile Pic">
+
+
+                {% else %}
+                <img src="{% static 'images/user-picture.png' %}" class="img-fluid rounded-circle" alt="Profile Pic">
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <h5 class="card-header">Account Details...<a href="" class="pass"><small><i
+                                class="fa-solid fa-gear"></i> Settings</a>
+
+                </h5>
+                </h5>
+                <div class="card-body">
+
+                    <h6>First Name: <strong class="strg">{{ firstName }}</strong></h6>
+                    <h6>Last Name: <strong class="strg">{{ lastName }}</strong></h6>
+                    <h6>Username: <strong class="strg">{{ user.username }}</strong></h6>
+                    <h6>Email: <strong class="strg">{{ user.email }}</strong></h6>
+                </div>
+                <br>
+                {% if userX.bio %}
+                <h5 class="card-header">My Bio
+
+                    <a href="" alt="Edit" class=""><small><i
+                                class="fa-solid fa-pen-to-square"></i></a>
+                </h5>
+                {% endif %}
+                <div class="card-body">
+                    <p class="card-text">{{ userX.bio }}</p>
+                    <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+
+                    <a href="" class="btn btn-outline-primary">
+                        <strong class="edit"><i class="fa-solid fa-receipt"></i> My
+                            Posts</strong>
+                    </a>
+
+                    <a href="" class="btn btn-outline-primary"><strong class="edit"><i
+                                class="fa-solid fa-heart"></i> Liked Posts</strong></a>
+
+
+                    <br>
+                    <br>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+	<br>
+	{% for post in posts %}
+		<div class="card-group">
+		  <div class="card">
+		  	<h6 class="card-header"><img class="profilePic rounded-circle" src="{{ userX.avatar.url }}"> <a href="{% url 'userProfile' post.user.id %}">{{ post.user }}</a></h6>
+		    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+		    <div class="card-body">
+		      <span><strong><a href="{% url 'likePostUserPage' post.id %}"><i class="fa-solid fa-thumbs-up"></i></a> </strong>
+		      <span class="likesCount"><strong>
+                    {{ post.likes.count}} likes</strong></span> 
+		      	<a href="{% url 'allComments' post.id %}" class="comm">Comments</a></span>
+		      <br>
+		      <br>
+		      <p class="card-text"><small class="text-muted">{{ post.description }}</small></p>
+		      <p class="card-text"><small class="text-muted">{{ post.date_added }}</small></p>
+		    </div>
+		  </div>
+		</div>
+	{% endfor %}
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
